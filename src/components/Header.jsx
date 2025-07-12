@@ -1,9 +1,10 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Menu, X, User } from 'lucide-react'
+import { Link, useLocation } from 'react-router-dom'
+import { Menu, X, User, LogOut } from 'lucide-react'
 
 function Header({ user, setUser }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const location = useLocation()
 
   const navigation = [
     { name: 'Home', href: '/' },
@@ -19,28 +20,37 @@ function Header({ user, setUser }) {
     setIsMenuOpen(false)
   }
 
+  const isActive = (path) => location.pathname === path
+
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
       <div className="container">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">DBU</span>
+          <Link to="/" className="flex items-center space-x-3">
+            <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-lg">D</span>
             </div>
-            <div>
-              <div className="font-bold text-gray-900">DBU Student Council</div>
+            <div className="hidden sm:block">
+              <div className="font-bold text-gray-900 text-lg">DBU Student Council</div>
               <div className="text-xs text-gray-500">Debre Birhan University</div>
+            </div>
+            <div className="sm:hidden">
+              <div className="font-bold text-gray-900">DBU</div>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden lg:flex items-center space-x-8">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 to={item.href}
-                className="text-gray-600 hover:text-blue-600 font-medium transition-colors"
+                className={`font-medium transition-colors ${
+                  isActive(item.href)
+                    ? 'text-blue-600'
+                    : 'text-gray-600 hover:text-blue-600'
+                }`}
               >
                 {item.name}
               </Link>
@@ -48,42 +58,46 @@ function Header({ user, setUser }) {
           </nav>
 
           {/* Desktop Auth Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden lg:flex items-center space-x-4">
             {user ? (
               <div className="flex items-center space-x-4">
-                <div className="flex items-center space-x-2">
-                  <User className="w-5 h-5 text-gray-600" />
-                  <span className="text-gray-700">{user.name}</span>
-                </div>
+                <Link
+                  to="/dashboard"
+                  className="flex items-center space-x-2 text-gray-700 hover:text-blue-600"
+                >
+                  <User className="w-5 h-5" />
+                  <span className="font-medium">{user.name}</span>
+                </Link>
                 <button
                   onClick={handleLogout}
-                  className="text-gray-600 hover:text-red-600 font-medium"
+                  className="flex items-center space-x-1 text-gray-600 hover:text-red-600 font-medium"
                 >
-                  Logout
+                  <LogOut className="w-4 h-4" />
+                  <span>Logout</span>
                 </button>
               </div>
             ) : (
-              <>
-                <Link
-                  to="/register"
-                  className="text-blue-600 hover:text-blue-700 font-medium"
-                >
-                  Register
-                </Link>
+              <div className="flex items-center space-x-3">
                 <Link
                   to="/login"
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                  className="text-blue-600 hover:text-blue-700 font-medium"
                 >
                   Sign In
                 </Link>
-              </>
+                <Link
+                  to="/register"
+                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                >
+                  Register
+                </Link>
+              </div>
             )}
           </div>
 
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2"
+            className="lg:hidden p-2 rounded-lg hover:bg-gray-100"
           >
             {isMenuOpen ? (
               <X className="w-6 h-6 text-gray-600" />
@@ -95,47 +109,56 @@ function Header({ user, setUser }) {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-200">
+          <div className="lg:hidden py-4 border-t border-gray-200">
             <nav className="flex flex-col space-y-4">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   to={item.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className="text-gray-600 hover:text-blue-600 font-medium"
+                  className={`font-medium transition-colors ${
+                    isActive(item.href)
+                      ? 'text-blue-600'
+                      : 'text-gray-600 hover:text-blue-600'
+                  }`}
                 >
                   {item.name}
                 </Link>
               ))}
               
               {user ? (
-                <div className="pt-4 border-t border-gray-200">
-                  <div className="flex items-center space-x-2 mb-4">
-                    <User className="w-5 h-5 text-gray-600" />
-                    <span className="text-gray-700">{user.name}</span>
-                  </div>
+                <div className="pt-4 border-t border-gray-200 space-y-4">
+                  <Link
+                    to="/dashboard"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="flex items-center space-x-2 text-gray-700 hover:text-blue-600"
+                  >
+                    <User className="w-5 h-5" />
+                    <span className="font-medium">{user.name}</span>
+                  </Link>
                   <button
                     onClick={handleLogout}
-                    className="text-red-600 hover:text-red-700 font-medium"
+                    className="flex items-center space-x-2 text-red-600 hover:text-red-700 font-medium"
                   >
-                    Logout
+                    <LogOut className="w-4 h-4" />
+                    <span>Logout</span>
                   </button>
                 </div>
               ) : (
-                <div className="pt-4 border-t border-gray-200 space-y-2">
-                  <Link
-                    to="/register"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="block text-blue-600 hover:text-blue-700 font-medium"
-                  >
-                    Register
-                  </Link>
+                <div className="pt-4 border-t border-gray-200 space-y-3">
                   <Link
                     to="/login"
                     onClick={() => setIsMenuOpen(false)}
-                    className="block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-center"
+                    className="block text-blue-600 hover:text-blue-700 font-medium"
                   >
                     Sign In
+                  </Link>
+                  <Link
+                    to="/register"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-center font-medium"
+                  >
+                    Register
                   </Link>
                 </div>
               )}

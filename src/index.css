@@ -18,7 +18,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Smooth scrolling */
 html {
   scroll-behavior: smooth;
 }
@@ -47,104 +46,40 @@ html {
   outline-offset: 2px;
 }
 
-/* Button hover effects */
+/* Smooth transitions */
+.transition-colors {
+  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+.transition-shadow {
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+/* Button styles */
 .btn-primary {
-  @apply bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5;
+  @apply bg-blue-600 text-white px-6 py-3 rounded-md font-semibold hover:bg-blue-700 transition-colors;
 }
 
 .btn-secondary {
-  @apply border-2 border-blue-600 text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 hover:text-white transition-all duration-300;
+  @apply border-2 border-blue-600 text-blue-600 px-6 py-3 rounded-md font-semibold hover:bg-blue-600 hover:text-white transition-colors;
 }
 
 /* Card styles */
 .card {
-  @apply bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100;
-}
-
-/* Animation utilities */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.animate-fadeInUp {
-  animation: fadeInUp 0.6s ease-out;
-}
-
-.animate-fadeIn {
-  animation: fadeIn 0.6s ease-out;
-}
-
-/* Responsive typography */
-@media (max-width: 640px) {
-  h1 {
-    @apply text-3xl;
-  }
-  h2 {
-    @apply text-2xl;
-  }
-  h3 {
-    @apply text-xl;
-  }
-}
-
-/* Loading spinner */
-.spinner {
-  @apply w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin;
+  @apply bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow border border-gray-100;
 }
 
 /* Form styles */
 .form-input {
-  @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors;
+  @apply w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors;
 }
 
-.form-input:focus {
-  @apply outline-none ring-2 ring-blue-500 border-blue-500;
-}
-
-/* Mobile menu animation */
-.mobile-menu-enter {
-  opacity: 0;
-  transform: translateY(-10px);
-}
-
-.mobile-menu-enter-active {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 300ms, transform 300ms;
-}
-
-.mobile-menu-exit {
-  opacity: 1;
-}
-
-.mobile-menu-exit-active {
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: opacity 300ms, transform 300ms;
-}
-
-/* Gradient text */
-.gradient-text {
-  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* Mobile responsive adjustments */
+@media (max-width: 640px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
 
 /* Professional shadows */
@@ -162,17 +97,18 @@ html {
 }
 
 .hover-lift:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
-/* Professional spacing */
-.section-padding {
-  @apply py-20 lg:py-32;
+/* Text styles */
+.text-balance {
+  text-wrap: balance;
 }
 
-.container-padding {
-  @apply px-4 sm:px-6 lg:px-8;
+/* Loading spinner */
+.spinner {
+  @apply w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin;
 }
 
 /* Status indicators */
@@ -186,46 +122,4 @@ html {
 
 .status-inactive {
   @apply bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-medium;
-}
-
-/* Professional borders */
-.border-professional {
-  border: 1px solid #e5e7eb;
-}
-
-.border-professional:hover {
-  border-color: #3b82f6;
-}
-
-/* Text styles */
-.text-professional {
-  @apply text-gray-700 leading-relaxed;
-}
-
-.text-professional-heading {
-  @apply text-gray-900 font-semibold leading-tight;
-}
-
-/* Button variants */
-.btn-outline {
-  @apply border-2 border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-medium hover:border-blue-500 hover:text-blue-600 transition-all duration-300;
-}
-
-.btn-ghost {
-  @apply text-gray-600 px-6 py-3 rounded-lg font-medium hover:bg-gray-100 hover:text-gray-900 transition-all duration-300;
-}
-
-/* Professional grid */
-.grid-professional {
-  @apply grid gap-8 sm:grid-cols-2 lg:grid-cols-3;
-}
-
-/* Image styles */
-.img-professional {
-  @apply rounded-2xl shadow-lg object-cover;
-}
-
-/* Professional layout */
-.layout-professional {
-  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
 }

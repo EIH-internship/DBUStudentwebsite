@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, User, LogOut } from 'lucide-react'
 
 function Header({ user, setUser }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -23,17 +23,17 @@ function Header({ user, setUser }) {
   const isActive = (path) => location.pathname === path
 
   return (
-    <header className="bg-white shadow-sm sticky top-0 z-50">
+    <header className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-blue-600 rounded-md flex items-center justify-center">
-              <span className="text-white font-bold text-sm">D</span>
+            <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-lg">D</span>
             </div>
             <div>
-              <div className="font-semibold text-gray-900 text-lg">DBU Student Council</div>
-              <div className="text-xs text-gray-500">Debre Birhan University</div>
+              <div className="font-bold text-gray-900 text-lg">DBU Student Council</div>
+              <div className="text-xs text-gray-500 hidden sm:block">Debre Birhan University</div>
             </div>
           </Link>
 
@@ -45,7 +45,7 @@ function Header({ user, setUser }) {
                 to={item.href}
                 className={`text-sm font-medium transition-colors hover:text-blue-600 ${
                   isActive(item.href)
-                    ? 'text-blue-600'
+                    ? 'text-blue-600 border-b-2 border-blue-600 pb-4'
                     : 'text-gray-700'
                 }`}
               >
@@ -55,44 +55,46 @@ function Header({ user, setUser }) {
           </nav>
 
           {/* Desktop Auth Buttons */}
-          <div className="hidden lg:flex items-center space-x-3">
+          <div className="hidden lg:flex items-center space-x-4">
             {user ? (
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-4">
                 <Link
                   to="/dashboard"
-                  className="text-gray-700 hover:text-blue-600 font-medium"
+                  className="flex items-center space-x-2 text-gray-700 hover:text-blue-600"
                 >
-                  {user.name}
+                  <User className="w-4 h-4" />
+                  <span className="font-medium">{user.name}</span>
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="text-gray-600 hover:text-red-600 font-medium"
+                  className="flex items-center space-x-1 text-gray-600 hover:text-red-600 font-medium"
                 >
-                  Logout
+                  <LogOut className="w-4 h-4" />
+                  <span>Logout</span>
                 </button>
               </div>
             ) : (
-              <>
-                <Link
-                  to="/register"
-                  className="text-blue-600 hover:text-blue-700 font-medium px-4 py-2"
-                >
-                  Register
-                </Link>
+              <div className="flex items-center space-x-3">
                 <Link
                   to="/login"
-                  className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors font-medium"
+                  className="text-blue-600 hover:text-blue-700 font-medium px-4 py-2"
                 >
                   Sign In
                 </Link>
-              </>
+                <Link
+                  to="/register"
+                  className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                >
+                  Register
+                </Link>
+              </div>
             )}
           </div>
 
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden p-2 rounded-md hover:bg-gray-100"
+            className="lg:hidden p-2 rounded-lg hover:bg-gray-100"
           >
             {isMenuOpen ? (
               <X className="w-6 h-6 text-gray-600" />
@@ -126,32 +128,34 @@ function Header({ user, setUser }) {
                   <Link
                     to="/dashboard"
                     onClick={() => setIsMenuOpen(false)}
-                    className="text-gray-700 hover:text-blue-600 px-2 py-1 block"
+                    className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 px-2 py-1"
                   >
-                    {user.name}
+                    <User className="w-4 h-4" />
+                    <span className="font-medium">{user.name}</span>
                   </Link>
                   <button
                     onClick={handleLogout}
-                    className="text-red-600 hover:text-red-700 font-medium px-2 py-1 text-left"
+                    className="flex items-center space-x-2 text-red-600 hover:text-red-700 font-medium px-2 py-1"
                   >
-                    Logout
+                    <LogOut className="w-4 h-4" />
+                    <span>Logout</span>
                   </button>
                 </div>
               ) : (
                 <div className="pt-4 border-t border-gray-200 space-y-3">
                   <Link
-                    to="/register"
+                    to="/login"
                     onClick={() => setIsMenuOpen(false)}
                     className="block text-blue-600 hover:text-blue-700 font-medium px-2 py-1"
                   >
-                    Register
+                    Sign In
                   </Link>
                   <Link
-                    to="/login"
+                    to="/register"
                     onClick={() => setIsMenuOpen(false)}
-                    className="block bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors text-center font-medium"
+                    className="block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-center font-medium"
                   >
-                    Sign In
+                    Register
                   </Link>
                 </div>
               )}

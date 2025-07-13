@@ -23,20 +23,17 @@ function Header({ user, setUser }) {
   const isActive = (path) => location.pathname === path
 
   return (
-    <header className="bg-white shadow-sm sticky top-0 z-50">
-      <div className="container">
+    <header className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-lg">D</span>
             </div>
-            <div className="hidden sm:block">
+            <div>
               <div className="font-bold text-gray-900 text-lg">DBU Student Council</div>
-              <div className="text-xs text-gray-500">Debre Birhan University</div>
-            </div>
-            <div className="sm:hidden">
-              <div className="font-bold text-gray-900">DBU</div>
+              <div className="text-xs text-gray-500 hidden sm:block">Debre Birhan University</div>
             </div>
           </Link>
 
@@ -46,10 +43,10 @@ function Header({ user, setUser }) {
               <Link
                 key={item.name}
                 to={item.href}
-                className={`font-medium transition-colors ${
+                className={`text-sm font-medium transition-colors hover:text-blue-600 ${
                   isActive(item.href)
-                    ? 'text-blue-600'
-                    : 'text-gray-600 hover:text-blue-600'
+                    ? 'text-blue-600 border-b-2 border-blue-600 pb-4'
+                    : 'text-gray-700'
                 }`}
               >
                 {item.name}
@@ -65,7 +62,7 @@ function Header({ user, setUser }) {
                   to="/dashboard"
                   className="flex items-center space-x-2 text-gray-700 hover:text-blue-600"
                 >
-                  <User className="w-5 h-5" />
+                  <User className="w-4 h-4" />
                   <span className="font-medium">{user.name}</span>
                 </Link>
                 <button
@@ -80,13 +77,13 @@ function Header({ user, setUser }) {
               <div className="flex items-center space-x-3">
                 <Link
                   to="/login"
-                  className="text-blue-600 hover:text-blue-700 font-medium"
+                  className="text-blue-600 hover:text-blue-700 font-medium px-4 py-2"
                 >
                   Sign In
                 </Link>
                 <Link
                   to="/register"
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                  className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium"
                 >
                   Register
                 </Link>
@@ -116,10 +113,10 @@ function Header({ user, setUser }) {
                   key={item.name}
                   to={item.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className={`font-medium transition-colors ${
+                  className={`font-medium transition-colors px-2 py-1 ${
                     isActive(item.href)
                       ? 'text-blue-600'
-                      : 'text-gray-600 hover:text-blue-600'
+                      : 'text-gray-700 hover:text-blue-600'
                   }`}
                 >
                   {item.name}
@@ -131,14 +128,14 @@ function Header({ user, setUser }) {
                   <Link
                     to="/dashboard"
                     onClick={() => setIsMenuOpen(false)}
-                    className="flex items-center space-x-2 text-gray-700 hover:text-blue-600"
+                    className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 px-2 py-1"
                   >
-                    <User className="w-5 h-5" />
+                    <User className="w-4 h-4" />
                     <span className="font-medium">{user.name}</span>
                   </Link>
                   <button
                     onClick={handleLogout}
-                    className="flex items-center space-x-2 text-red-600 hover:text-red-700 font-medium"
+                    className="flex items-center space-x-2 text-red-600 hover:text-red-700 font-medium px-2 py-1"
                   >
                     <LogOut className="w-4 h-4" />
                     <span>Logout</span>
@@ -149,7 +146,7 @@ function Header({ user, setUser }) {
                   <Link
                     to="/login"
                     onClick={() => setIsMenuOpen(false)}
-                    className="block text-blue-600 hover:text-blue-700 font-medium"
+                    className="block text-blue-600 hover:text-blue-700 font-medium px-2 py-1"
                   >
                     Sign In
                   </Link>
